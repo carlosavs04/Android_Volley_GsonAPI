@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Person;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,10 +19,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.examen.Adaptadores.GanadorAdaptador;
+import com.example.examen.Modelos.Data;
 import com.example.examen.Modelos.Ganador;
 import com.example.examen.Modelos.Numero;
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -77,18 +80,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void sendResultado() {
-        String url="";
+        String url="https://ramiro.uttics.com/api/enviarnumero";
         JSONObject jsonBody = new JSONObject();
+        JSONObject jsonObject = new JSONObject();
 
         try {
-            jsonBody.put("resultado", acumSuma);
+            jsonBody.put("nombre", "Carlos Avalos");
+            jsonBody.put("numero", ""+acumSuma);
         }
 
         catch (JSONException e) {
-
+            Log.i("errorPeticion", e.toString());
         }
 
-        JsonObjectRequest peticion = new JsonObjectRequest(Request.Method.POST, url, jsonBody, new Response.Listener<JSONObject>() {
+        try {
+            jsonObject.put("persona", jsonBody);
+        }
+
+        catch (JSONException e) {
+            Log.i("errorPeticion", e.toString());
+        }
+
+        JsonObjectRequest peticion = new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
 
@@ -96,9 +109,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Log.i("errorPeticion", error.toString());
             }
         });
+
+        nQueue.add(peticion);
     }
 
     @Override
@@ -116,6 +131,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (view.getId() == R.id.btnResultados) {
             startActivity(new Intent(this, Results.class));
+        }
+
+        if (view.getId() == R.id.btnEnviar){
+            sendResultado();
         }
 
         if (view.getId() == R.id.btnReiniciar) {

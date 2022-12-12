@@ -56,8 +56,8 @@ public class GanadorAdaptador extends RecyclerView.Adapter<GanadorAdaptador.view
         {
             dataHolder = d;
             txtNombre.setText(dataHolder.getNombre());
-            txtCantidad.setText(dataHolder.getCantidad());
-            Picasso.get().load(dataHolder.getUrlImg()).into(imgUrl);
+            txtCantidad.setText(dataHolder.getNumero());
+            //Picasso.get().load(dataHolder.getUrlImg()).into(imgUrl);
         }
     }
 }

@@ -1,25 +1,25 @@
 package com.example.examen.Modelos;
 
 public class Data {
-    private final String Nombre;
-    private final String Cantidad;
-    private final String urlImg;
+    private final String nombre;
+    private final String numero;
+    //private final String urlImg;
 
-    public Data(String nombre, String cantidad, String urlImg) {
-        Nombre = nombre;
-        Cantidad = cantidad;
-        this.urlImg = urlImg;
+    public Data(String nombre, String numero) {
+        this.nombre = nombre;
+        this.numero = numero;
+        //this.urlImg = urlImg;
     }
 
     public String getNombre() {
-        return Nombre;
+        return nombre;
     }
 
-    public String getCantidad() {
-        return Cantidad;
+    public String getNumero() {
+        return numero;
     }
 
-    public String getUrlImg() {
-        return urlImg;
-    }
+    //public String getUrlImg() {
+       // return urlImg;
+    //}
 }
